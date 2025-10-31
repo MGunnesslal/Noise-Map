@@ -379,6 +379,32 @@ function hookMainFilterButton(allFeats) {
   });
 }
 
+function clearAllFiltersAndReset(allFeats) {
+  document.getElementById("filter-date-start").value = "";
+  document.getElementById("filter-date-end").value = "";
+
+  document.querySelectorAll('#filter-determination input[type=checkbox]')
+    .forEach(cb => { cb.checked = true; });
+
+  document.querySelectorAll('#filter-vrtype input[type=checkbox]')
+    .forEach(cb => { cb.checked = true; });
+
+  renderFeaturesToMap(allFeats);
+}
+
+function hookMainFilterButton(allFeats) {
+  const applyBtn = document.getElementById("apply-main-filters");
+  applyBtn.addEventListener("click", () => {
+    const filtered = getFilteredFeatures(allFeats);
+    renderFeaturesToMap(filtered);
+  });
+
+  const clearBtn = document.getElementById("clear-main-filters");
+  clearBtn.addEventListener("click", () => {
+    clearAllFiltersAndReset(allFeats);
+  });
+}
+
 function haversineKm(lat1, lon1, lat2, lon2) {
   const R = 6371;
   const toRad = deg => deg * Math.PI/180;
