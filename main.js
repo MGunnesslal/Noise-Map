@@ -311,8 +311,8 @@ function buildFilterCheckboxes(features) {
   determinations.forEach(det => {
     const id = "det-" + det.replace(/\W+/g,"_");
     detContainer.innerHTML += `
-      <label style="display:flex;align-items:center;gap:6px;">
-        <input type="checkbox" id="${id}" data-det="${det}" checked>
+      <label class="check-row">
+          <input type="checkbox" data-det="${det}" checked>
         <span>${det}</span>
       </label>`;
   });
@@ -321,8 +321,8 @@ function buildFilterCheckboxes(features) {
   vrtypes.forEach(vr => {
     const id = "vr-" + vr.replace(/\W+/g,"_");
     vrContainer.innerHTML += `
-      <label style="display:flex;align-items:center;gap:6px;">
-        <input type="checkbox" id="${id}" data-vrtype="${vr}" checked>
+      <label class="check-row">
+        <input type="checkbox" data-vrtype="${vr}" checked>
         <span>${vr}</span>
       </label>`;
   });
@@ -575,7 +575,7 @@ function openFullDetailsModal() {
     </div>
   `;
 
-  // nuke any existing modal instance first
+  // to close any existing modal instance first
   closeFullDetailsModal();
 
   const wrapper = document.createElement("div");
@@ -583,7 +583,7 @@ function openFullDetailsModal() {
   wrapper.innerHTML = modalHtml;
   document.body.appendChild(wrapper);
 
-  // hook up close behavior
+  // wire-up for the close behavior
   document.getElementById("refModalClose").addEventListener("click", closeFullDetailsModal);
   document.getElementById("refModalBackdrop").addEventListener("click", closeFullDetailsModal);
 }
