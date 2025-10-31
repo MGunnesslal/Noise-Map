@@ -514,14 +514,12 @@ function renderRefTablePreview(mainFeature, relatedList) {
 function openFullDetailsModal() {
   const { mainFeature, related } = lastRefSearch;
   if (!mainFeature) {
-    alert("No results yet. Run a related search first.");
     return;
   }
 
   const allRows = related;
 
   if (!allRows || allRows.length === 0) {
-    alert("No other events found within 1 km and 14 calendar days.");
     return;
   }
 
