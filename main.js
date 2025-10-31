@@ -522,7 +522,6 @@ function openFullDetailsModal() {
   }
 
   const allRows = related;
-
   if (!allRows || allRows.length === 0) {
     return;
   }
@@ -530,58 +529,42 @@ function openFullDetailsModal() {
   const tableRows = allRows.map(f => `
     <tr>
       <td>${f.reference || ""}</td>
-      <td>${f.eventLocation || ""}</td>
       <td>${f.startDate || ""} ${f.startTime || ""}</td>
       <td>${f.endDate || ""} ${f.endTime || ""}</td>
       <td>${f.vrType || ""}</td>
       <td>${f.determination || ""}</td>
       <td>${f.applicant || ""}</td>
       <td>${f.host || ""}</td>
+      <td>${f.eventLocation || ""}</td>
       <td>${f.description || ""}</td>
       <td>${f.easting}, ${f.northing}</td>
     </tr>
   `).join("");
 
   const modalHtml = `
-    <div id="refModalBackdrop"
-         style="position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:9998;">
-    </div>
-    <div id="refModal"
-         style="
-          position:fixed;
-          top:50%; left:50%;
-          transform:translate(-50%,-50%);
-          background:#fff;
-          z-index:9999;
-          max-width:90%;
-          max-height:80%;
-          overflow:auto;
-          border-radius:10px;
-          box-shadow:0 20px 40px rgba(0,0,0,0.4);
-          padding:16px;
-          font-size:13px;
-         ">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-        <div style="font-weight:600;">Related Events (±14 days / 1 km)</div>
-        <button id="refModalClose"
-          style="border:1px solid var(--border); background:#fff; border-radius:6px; padding:4px 8px; cursor:pointer;">
-          Close
-        </button>
+    <div id="refModalBackdrop"></div>
+    <div id="refModal">
+      <div class="refModalHeader">
+        <div class="refModalTitle">
+          Related Events (±14 days / 1 km)
+        </div>
+        <button id="refModalClose" class="refModalCloseBtn">Close</button>
       </div>
-      <div style="overflow:auto;">
-        <table style="border-collapse:collapse; width:100%; font-size:12px;">
-          <thead style="position:sticky; top:0; background:#f8f8f8; z-index:5;">
+
+      <div class="refModalTableWrapper">
+        <table class="refModalTable">
+          <thead>
             <tr>
-              <th style="border-bottom:1px solid var(--border); text-align:left; padding:4px;">Ref</th>
-              <th style="border-bottom:1px solid var(--border); text-align:left; padding:4px;">Start</th>
-              <th style="border-bottom:1px solid var(--border); text-align:left; padding:4px;">End</th>
-              <th style="border-bottom:1px solid var(--border); text-align:left; padding:4px;">VR Type</th>
-              <th style="border-bottom:1px solid var(--border); text-align:left; padding:4px;">Determination</th>
-              <th style="border-bottom:1px solid var(--border); text-align:left; padding:4px;">Applicant</th>
-              <th style="border-bottom:1px solid var(--border); text-align:left; padding:4px;">Host</th>
-              <th style="border-bottom:1px solid var(--border); text-align:left; padding:4px;">Description</th>
-              <th style="border-bottom:1px solid var(--border); text-align:left; padding:4px;">Location</th>
-              <th style="border-bottom:1px solid var(--border); text-align:left; padding:4px;">UTM (E,N)</th>
+              <th>Ref</th>
+              <th>Start</th>
+              <th>End</th>
+              <th>VR Type</th>
+              <th>Determination</th>
+              <th>Applicant</th>
+              <th>Host</th>
+              <th>Location</th>
+              <th>Description</th>
+              <th>UTM (E,N)</th>
             </tr>
           </thead>
           <tbody>
@@ -592,16 +575,15 @@ function openFullDetailsModal() {
     </div>
   `;
 
-  // safety measure
+  // nuke any existing modal instance first
   closeFullDetailsModal();
 
-  // inject modal fresh
   const wrapper = document.createElement("div");
   wrapper.setAttribute("id", "refModalWrapper");
   wrapper.innerHTML = modalHtml;
   document.body.appendChild(wrapper);
 
-  // hook up close actions
+  // hook up close behavior
   document.getElementById("refModalClose").addEventListener("click", closeFullDetailsModal);
   document.getElementById("refModalBackdrop").addEventListener("click", closeFullDetailsModal);
 }
