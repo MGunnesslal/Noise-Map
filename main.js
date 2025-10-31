@@ -492,8 +492,12 @@ function openFullDetailsModal() {
     return;
   }
 
-  // build big table
-  const allRows = [mainFeature, ...related];
+  const allRows = related;
+
+  if (!allRows || allRows.length === 0) {
+    alert("No other events found within 1 km and 14 calendar days.");
+    return;
+  }
 
   const tableRows = allRows.map(f => `
     <tr>
@@ -558,11 +562,16 @@ function openFullDetailsModal() {
     </div>
   `;
 
+  // safety measure
+  closeFullDetailsModal();
+
+  // inject modal fresh
   const wrapper = document.createElement("div");
   wrapper.setAttribute("id", "refModalWrapper");
   wrapper.innerHTML = modalHtml;
   document.body.appendChild(wrapper);
 
+  // hook up close actions
   document.getElementById("refModalClose").addEventListener("click", closeFullDetailsModal);
   document.getElementById("refModalBackdrop").addEventListener("click", closeFullDetailsModal);
 }
