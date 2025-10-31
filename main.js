@@ -546,7 +546,7 @@ function openFullDetailsModal() {
     <div id="refModal">
       <div class="refModalHeader">
         <div class="refModalTitle">
-          Related Events (±14 days / 1 km)
+          Related Events (14 calendar days / 1 km)
         </div>
         <button id="refModalClose" class="refModalCloseBtn">Close</button>
       </div>
