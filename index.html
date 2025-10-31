@@ -16,91 +16,82 @@
 </head>
 <body>
   <div class="app">
-    <!-- side panel user functions -->
-    <aside class="sidebar" aria-label="Tool panel">
-      <div class="sidebar-header">
-        <h1 id="mainhead">Noise Map Tools</h1>
-      </div>
-	<div class="sidebar-body" style="font-size:13px; line-height:1.4;">
-	  <!-- Date range filter -->
-	<div class="filter-block">
-	  <div class="filter-block-header">
-	    <span>Filter by Start Date range</span>
+	<div class="sidebar-body">
+	
+	  <!-- DATE RANGE FILTER -->
+	  <div class="filter-block">
+	    <div class="filter-block-header">
+	      <span>Filter by Start Date range</span>
+	    </div>
+	
+	    <label style="display:block; font-size:12px; color:#475569; margin-bottom:6px;">
+	      From:
+	      <input id="filter-date-start" type="date">
+	    </label>
+	
+	    <label style="display:block; font-size:12px; color:#475569;">
+	      To:
+	      <input id="filter-date-end" type="date">
+	    </label>
 	  </div>
 	
-	  <label style="display:block; font-size:12px; color:#475569; margin-bottom:6px;">
-	    From:
-	    <input id="filter-date-start" type="date">
-	  </label>
+	  <!-- DETERMINATION FILTER -->
+	  <div class="filter-block">
+	    <div class="filter-block-header">
+	      <span>Determination</span>
+	    </div>
+	    <div id="filter-determination" style="display:grid; gap:6px;">
+	      <!-- JS will inject <label class="check-row"><input type="checkbox"> ... -->
+	    </div>
+	  </div>
 	
-	  <label style="display:block; font-size:12px; color:#475569;">
-	    To:
-	    <input id="filter-date-end" type="date">
-	  </label>
+	  <!-- VR TYPE FILTER -->
+	  <div class="filter-block">
+	    <div class="filter-block-header">
+	      <span>VR type</span>
+	    </div>
+	    <div id="filter-vrtype" style="display:grid; gap:6px;">
+	      <!-- JS will inject <label class="check-row"><input type="checkbox"> ... -->
+	    </div>
+	  </div>
+	
+	  <!-- FILTER BUTTONS -->
+	  <div class="filter-block">
+	    <button id="apply-main-filters" class="btn">Apply Filters</button>
+	    <button id="clear-main-filters" class="btn secondary" style="margin-top:8px;">Clear Filters</button>
+	  </div>
+	
+	  <!-- RELATED EVENTS SEARCH -->
+	  <div class="filter-block">
+	    <div class="filter-block-header">
+	      <span>Find related events</span>
+	    </div>
+	
+	    <div class="filter-hint">
+	      Enter a Reference No. (e.g. VR8645). We'll show all other events:
+	      <br>- within 1 km radius
+	      <br>- within ±14 days of its Start date
+	    </div>
+	
+	    <input id="ref-search-input" type="text" placeholder="Reference No. (e.g. VR8645)" style="margin-bottom:8px;">
+	
+	    <button id="run-ref-search" class="btn">Run Related Search</button>
+	
+	    <div class="filter-hint" style="margin-top:12px;">
+	      Results:
+	    </div>
+	
+	    <!-- live preview table -->
+	    <div id="ref-results-table">
+	      <!-- JS fills this with a <table> that uses sticky header etc. -->
+	    </div>
+	
+	    <button id="open-ref-details" class="btn" style="margin-top:12px;">
+	      Open Full Details
+	    </button>
+	  </div>
+	
 	</div>
-
-	  <!-- Determination filter -->
-	  <div class="filter-block" style="margin-bottom:1rem;">
-		<div style="font-weight:600; margin-bottom:4px;">Determination</div>
-		<div id="filter-determination" style="display:grid; gap:4px;">
-		  <!-- checkboxes injected by JS -->
-		</div>
-	  </div>
-
-	  <!-- VR type filter -->
-	  <div class="filter-block" style="margin-bottom:1rem;">
-		<div style="font-weight:600; margin-bottom:4px;">VR type</div>
-		<div id="filter-vrtype" style="display:grid; gap:4px;">
-		  <!-- checkboxes injected by JS -->
-		</div>
-	  </div>
-
-	  <button id="apply-main-filters"
-		style="width:100%; padding:8px 10px; border:1px solid var(--border); background:#fff; border-radius:8px; font-size:13px; cursor:pointer; margin-bottom:1rem;">
-		Apply Filters
-	  </button>
-	  <button id="clear-main-filters"
-        style="width:100%; padding:8px 10px; border:1px solid var(--border); background:#fff; border-radius:8px; font-size:13px; cursor:pointer; margin-bottom:1rem;">
-        Clear Filters
-      </button>
-	
-	  <hr style="border:none; border-top:1px solid var(--border); margin:1rem 0;">
-
-	  <!-- Reference neighborhood query -->
-	  <div class="filter-block" style="margin-bottom:0.5rem;">
-		<div style="font-weight:600; margin-bottom:4px;">Find related events</div>
-		<div style="font-size:12px; color:var(--muted); margin-bottom:4px;">
-		  Enter a Reference No. (e.g. VR8645). We'll show all other events:
-		  <br>- within 1 km radius
-		  <br>- within ±14 days of its Start date
-		</div>
-
-		<input id="ref-search-input" type="text" placeholder="Reference No. (e.g. VR8645)"
-		  style="width:100%; padding:6px 8px; font-size:13px; border:1px solid var(--border); border-radius:6px; margin-bottom:8px;">
-
-		<button id="run-ref-search"
-		  style="width:100%; padding:8px 10px; border:1px solid var(--border); background:#fff; border-radius:8px; font-size:13px; cursor:pointer;">
-		  Run Related Search
-		</button>
-	  </div>
-
-	  <div style="font-size:12px; color:var(--muted); margin-top:0.5rem;">
-		Results:
-	  </div>
-
-	  <!-- We'll inject a table preview here -->
-	  <div id="ref-results-table"
-		style="max-height:200px; overflow:auto; border:1px solid var(--border); border-radius:6px; font-size:12px; margin-top:4px; background:white;">
-		<!-- table HTML from JS -->
-	  </div>
-
-	  <button id="open-ref-details"
-		style="width:100%; margin-top:0.5rem; padding:8px 10px; border:1px solid var(--border); background:#fff; border-radius:8px; font-size:13px; cursor:pointer;">
-		Open Full Details
-	  </button>
-	</div>
-
-    </aside>
 
     <!-- map display panel -->
     <main class="map-pane" aria-label="Map display">
@@ -145,5 +136,6 @@
   <script src="./main.js"></script>
 </body>
 </html>
+
 
 
