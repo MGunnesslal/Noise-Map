@@ -365,3 +365,113 @@ html, body {
   background: #f1f5f9;
 }
 
+/* --- MODAL OVERLAY -------------------------------------------- */
+
+#refModalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 9998;
+}
+
+#refModal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+  z-index: 9999;
+  max-width: 90%;
+  max-height: 80%;
+  overflow: auto;
+  border-radius: 10px;
+  box-shadow: 0 24px 48px rgba(0,0,0,0.4);
+  padding: 16px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #0f172a;
+  font-size: 13px;
+  line-height: 1.4;
+  border: 1px solid rgba(15,23,42,0.08);
+}
+
+/* Modal header row: title + close button */
+.refModalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.refModalTitle {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.refModalCloseBtn {
+  border: 1px solid var(--border, #d4d4d8);
+  background: #fff;
+  border-radius: 6px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1.2;
+  color: #475569;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+.refModalCloseBtn:hover {
+  background: #f8fafc;
+}
+
+/* --- MODAL TABLE --------------------------------------------- */
+
+.refModalTableWrapper {
+  overflow: auto;
+  max-height: 60vh;
+  border: 1px solid var(--border, #d4d4d8);
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  background: #fff;
+}
+
+/* the big details table */
+.refModalTable {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 700px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #1e293b;
+}
+
+.refModalTable thead {
+  background: #f8fafc;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #475569;
+  border-bottom: 1px solid var(--border, #d4d4d8);
+}
+
+.refModalTable th {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border, #d4d4d8);
+  white-space: nowrap;
+  vertical-align: top;
+  font-weight: 600;
+}
+
+.refModalTable td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #e5e7eb;
+  vertical-align: top;
+}
+
+.refModalTable tbody tr:hover {
+  background: #f1f5f9;
+}
