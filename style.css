@@ -1,0 +1,192 @@
+:root {
+  --bg: #f7f7fb;
+  --panel-bg: #ffffff;
+  --text: #0f172a; /* slate-900 */
+  --muted: #64748b; /* slate-500 */
+  --border: #e5e7eb; /* gray-200 */
+  --accent: #2563eb; /* blue-600 */
+  --radius: 16px;
+  --shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+#mainhead {
+  font-size: clamp(1.5rem, 1.1rem + 1.8vw, 2.25rem); 
+  line-height: 1.2;                  
+  font-weight: 700;                   
+  letter-spacing: -0.02em;             
+  color: var(--muted, #475569);          
+  margin-block: 0.25rem 0.75rem;	
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  gap: 12px;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.sidebar {
+  flex: 0 0 20%;
+  display: flex;
+  flex-direction: column;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  min-width: 240px;
+}
+
+.sidebar-header {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.sidebar-header h1 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.sidebar-body {
+  padding: 14px 18px 18px;
+  overflow: auto;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.map-pane {
+  flex: 1 1 75%;
+  position: relative;
+  background: #dbeafe;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+#map {
+  position: absolute;
+  inset: 0;
+}
+
+.brand-badge {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 500;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 12px;
+  color: var(--muted);
+  backdrop-filter: blur(6px);
+}
+
+@media (max-width: 900px) {
+  .sidebar { min-width: 200px; }
+}
+
+.leaflet-control.basemap-toggle {
+  box-shadow: var(--shadow, 0 8px 24px rgba(2, 6, 23, 0.08));
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.basemap-btn {
+  border: 1px solid var(--border, #e5e7eb);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 8px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 999px;
+}
+
+.basemap-btn:hover { background: #ffffff; }
+.basemap-btn:focus { outline: 2px solid var(--accent, #2563eb); outline-offset: 2px; }
+
+.leaflet-control-geocoder .geocoder-clear-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 1px solid var(--border, #e5e7eb);
+  background: rgba(255,255,255,0.95);
+  width: 24px;
+  height: 24px;
+  line-height: 22px;
+  text-align: center;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+  box-shadow: var(--shadow, 0 8px 24px rgba(2, 6, 23, 0.08));
+  color: var(--muted, #64748b);
+}
+
+.leaflet-control-geocoder .geocoder-clear-btn:hover {
+  background: #ffffff;
+}
+
+/* Inset map container CSS - Start*/
+.inset-container {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(2, 6, 23, 0.08);
+  padding: 6px;
+}
+
+.inset-map {
+  width: 180px; 
+  height: 140px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.inset-viewport-rect {
+  stroke: red;
+  stroke-width: 2;
+  fill: none;
+}
+/*End of Inset Map CSS */
+
+/*Code for how labels appear (black text with white halo)*/
+.leaflet-tooltip.label-mask {
+  background: transparent; 
+  border: none;
+  box-shadow: none;
+  color: #000; 
+  font-weight: 600;
+  padding: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  -webkit-text-stroke: 2px #fff;
+  text-shadow:
+    -1px -1px 0 #fff,  1px -1px 0 #fff,
+    -1px  1px 0 #fff,  1px  1px 0 #fff,
+     0   -2px 0 #fff,  0    2px 0 #fff,
+    -2px  0   0 #fff,  2px  0   0 #fff;
+}
+
+.leaflet-tooltip.label-mask::before {
+  display: none;
+}

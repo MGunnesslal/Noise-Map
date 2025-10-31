@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Noise Map</title>
+
+  <link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
+  <link rel="icon" href="icons/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#2563eb">
+  
+  <!-- App styles -->
+  <link rel="stylesheet" href="./style.css" />
+  
+</head>
+<body>
+  <div class="app">
+    <!-- side panel user functions -->
+    <aside class="sidebar" aria-label="Tool panel">
+      <div class="sidebar-header">
+        <h1 id="mainhead">Noise Map Tools</h1>
+      </div>
+	<div class="sidebar-body" style="font-size:13px; line-height:1.4;">
+	  <!-- Date range filter -->
+	  <div class="filter-block" style="margin-bottom:1rem;">
+		<div style="font-weight:600; margin-bottom:4px;">Filter by Start Date range</div>
+		<label>From:
+		  <input id="filter-date-start" type="date" style="width:100%; padding:4px 6px; font-size:13px; border:1px solid var(--border); border-radius:6px;">
+		</label>
+		<label>To:
+		  <input id="filter-date-end" type="date" style="width:100%; padding:4px 6px; font-size:13px; border:1px solid var(--border); border-radius:6px;">
+		</label>
+	  </div>
+
+	  <!-- Determination filter -->
+	  <div class="filter-block" style="margin-bottom:1rem;">
+		<div style="font-weight:600; margin-bottom:4px;">Determination</div>
+		<div id="filter-determination" style="display:grid; gap:4px;">
+		  <!-- checkboxes injected by JS -->
+		</div>
+	  </div>
+
+	  <!-- VR type filter -->
+	  <div class="filter-block" style="margin-bottom:1rem;">
+		<div style="font-weight:600; margin-bottom:4px;">VR type</div>
+		<div id="filter-vrtype" style="display:grid; gap:4px;">
+		  <!-- checkboxes injected by JS -->
+		</div>
+	  </div>
+
+	  <button id="apply-main-filters"
+		style="width:100%; padding:8px 10px; border:1px solid var(--border); background:#fff; border-radius:8px; font-size:13px; cursor:pointer; margin-bottom:1rem;">
+		Apply Filters
+	  </button>
+
+	  <hr style="border:none; border-top:1px solid var(--border); margin:1rem 0;">
+
+	  <!-- Reference neighborhood query -->
+	  <div class="filter-block" style="margin-bottom:0.5rem;">
+		<div style="font-weight:600; margin-bottom:4px;">Find related events</div>
+		<div style="font-size:12px; color:var(--muted); margin-bottom:4px;">
+		  Enter a Reference No. (e.g. VR8645). We'll show all other events:
+		  <br>- within 1 km radius
+		  <br>- within ±14 days of its Start date
+		</div>
+
+		<input id="ref-search-input" type="text" placeholder="Reference No. (e.g. VR8645)"
+		  style="width:100%; padding:6px 8px; font-size:13px; border:1px solid var(--border); border-radius:6px; margin-bottom:8px;">
+
+		<button id="run-ref-search"
+		  style="width:100%; padding:8px 10px; border:1px solid var(--border); background:#fff; border-radius:8px; font-size:13px; cursor:pointer;">
+		  Run Related Search
+		</button>
+	  </div>
+
+	  <div style="font-size:12px; color:var(--muted); margin-top:0.5rem;">
+		Results:
+	  </div>
+
+	  <!-- We'll inject a table preview here -->
+	  <div id="ref-results-table"
+		style="max-height:200px; overflow:auto; border:1px solid var(--border); border-radius:6px; font-size:12px; margin-top:4px; background:white;">
+		<!-- table HTML from JS -->
+	  </div>
+
+	  <button id="open-ref-details"
+		style="width:100%; margin-top:0.5rem; padding:8px 10px; border:1px solid var(--border); background:#fff; border-radius:8px; font-size:13px; cursor:pointer;">
+		Open Full Details
+	  </button>
+	</div>
+
+    </aside>
+
+    <!-- map display panel -->
+    <main class="map-pane" aria-label="Map display">
+      <div id="map" role="application" aria-label="Leaflet map"></div>
+    </main>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+  
+  <!-- Plugins: geocoder, draw, turf, projections, CSV, heatmap, export -->
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>    
+  <!-- MarkerCluster CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+
+  <!-- MarkerCluster JS -->
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>	
+	
+	<link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+
+	<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+	<script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+	<script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/proj4@2.9.2/dist/proj4.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/proj4@2.11.0/dist/proj4.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/proj4leaflet@1.0.2/src/proj4leaflet.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+	<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+  <!-- my custom script for map -->
+ 
+  <script src="./main.js"></script>
+</body>
+</html>
