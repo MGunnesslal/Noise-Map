@@ -177,6 +177,7 @@ function normalizeRow(row) {
     reference: row["Reference No."],
     year: row["Year"],
     applicant: row["Applicant"],
+    eventLocation: row["Event Location"],
     description: row["Event Description"],
     startDate: row["Start date"],
     endDate: row["End date"],
@@ -243,7 +244,8 @@ function popupHtmlForFeature(f) {
   return `
     <div style="font-size:13px; line-height:1.4;">
       <div><strong>${f.reference || "No Ref"}</strong></div>
-      <div>${f.description || ""}</div>
+      <div><strong>Description:</strong> ${f.description || ""}</div>
+      <div><strong>Location:</strong> ${f.eventLocation || ""}</div>
       <div><strong>Applicant:</strong> ${f.applicant || ""}</div>
       <div><strong>Host:</strong> ${f.host || ""}</div>
       <div><strong>VR type:</strong> ${f.vrType || ""}</div>
@@ -484,6 +486,7 @@ function renderRefTablePreview(mainFeature, relatedList) {
     return `
       <tr>
         <td>${f.reference || ""}</td>
+        <td>${f.eventLocation || ""}</td>
         <td>${f.startDate || ""} ${f.startTime || ""}</td>
         <td>${f.vrType || ""}</td>
         <td>${f.determination || ""}</td>
@@ -497,6 +500,7 @@ function renderRefTablePreview(mainFeature, relatedList) {
       <thead style="position:sticky; top:0; background:#f8f8f8;">
         <tr>
           <th style="border-bottom:1px solid var(--border); text-align:left; padding:4px;">Ref</th>
+          <th style="border-bottom:1px solid var(--border); text-align:left; padding:4px;">Loc</th>
           <th style="border-bottom:1px solid var(--border); text-align:left; padding:4px;">Start</th>
           <th style="border-bottom:1px solid var(--border); text-align:left; padding:4px;">VR</th>
           <th style="border-bottom:1px solid var(--border); text-align:left; padding:4px;">Det.</th>
@@ -526,6 +530,7 @@ function openFullDetailsModal() {
   const tableRows = allRows.map(f => `
     <tr>
       <td>${f.reference || ""}</td>
+      <td>${f.eventLocation || ""}</td>
       <td>${f.startDate || ""} ${f.startTime || ""}</td>
       <td>${f.endDate || ""} ${f.endTime || ""}</td>
       <td>${f.vrType || ""}</td>
@@ -575,6 +580,7 @@ function openFullDetailsModal() {
               <th style="border-bottom:1px solid var(--border); text-align:left; padding:4px;">Applicant</th>
               <th style="border-bottom:1px solid var(--border); text-align:left; padding:4px;">Host</th>
               <th style="border-bottom:1px solid var(--border); text-align:left; padding:4px;">Description</th>
+              <th style="border-bottom:1px solid var(--border); text-align:left; padding:4px;">Location</th>
               <th style="border-bottom:1px solid var(--border); text-align:left; padding:4px;">UTM (E,N)</th>
             </tr>
           </thead>
