@@ -17,7 +17,40 @@
 <body>
   <div class="app">
 	<div class="sidebar-body">
+
+	  <!-- DATA BLOCK -->
+	  <div class="filter-block">
+	    <div class="filter-block-header">
+	      <span>Data Link</span>
+	    </div>
 	
+	    <div class="filter-hint">
+	      <div>
+	        <strong>Folder:</strong><br>
+	        <a class="sidebar-link"
+	           href="https://drive.google.com/drive/folders/139H73GKeLnDXwqWwc60kmA1UkxYytM7V?usp=sharing"
+	           target="_blank" rel="noopener noreferrer">
+	          Google Drive (all sheets)
+	        </a>
+	      </div>
+	
+	      <div style="margin-top:8px;">
+	        <strong>Current Sheet:</strong><br>
+	        <a class="sidebar-link"
+	           href="https://docs.google.com/spreadsheets/d/1ro2RikBI665e5VLKk8MPUylEkAEJIhfKeBo46AGimLo/edit?usp=drive_link"
+	           target="_blank" rel="noopener noreferrer">
+	          Active data sheet
+	        </a>
+	      </div>
+	
+	      <div style="margin-top:12px; font-size:11px; line-height:1.4; color:#475569;">
+	        <strong>Note:</strong><br>
+	        Username: <span style="user-select:text;">unitnoise3@gmail.com</span><br>
+	        Password: <span style="user-select:text;">Password100%</span>
+	      </div>
+	    </div>
+	  </div>
+		
 	  <!-- DATE RANGE FILTER -->
 	  <div class="filter-block">
 	    <div class="filter-block-header">
@@ -68,9 +101,9 @@
 	    </div>
 	
 	    <div class="filter-hint">
-	      Enter a Reference No. (e.g. VR8645). We'll show all other events:
+	      Enter a Reference No. (e.g. VR8645). Results will show all other events:
 	      <br>- within 1 km radius
-	      <br>- within ±14 days of its Start date
+	      <br>- within 14 calendar days of its Start date 
 	    </div>
 	
 	    <input id="ref-search-input" type="text" placeholder="Reference No. (e.g. VR8645)" style="margin-bottom:8px;">
@@ -136,6 +169,7 @@
   <script src="./main.js"></script>
 </body>
 </html>
+
 
 
 
